@@ -1,0 +1,12 @@
+<% include partials/header.ejs %>
+
+<h1>camps</h1>
+
+<% camps.forEach(function(camp) { %>
+  <div>
+    <h4><%= camp.name%></h4>
+    <img src="<%= camp.image %>">
+  </div>
+<% }); %>
+
+<% include partials/footer.ejs %>
