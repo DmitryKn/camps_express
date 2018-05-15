@@ -6,7 +6,11 @@ const bodyParser = require("body-parser");
 var arrayData = [
   {name: "Saugeen Springs RV Park", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
   {name: "Amazing Rocky Park Campground", image: "https://bonvoyagejogja.com/wp-content/uploads/2017/02/IGjogjacamping.jpg"},
-  {name: "Marmora KOA", image: "http://businessidei.com/uploads/posts/2013-05/1368357691_mini-kemping-1.jpg"}
+  {name: "Marmora KOA", image: "http://businessidei.com/uploads/posts/2013-05/1368357691_mini-kemping-1.jpg"},
+  {name: "Saugeen Springs RV Park", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
+  {name: "Amazing Rocky Park Campground", image: "https://bonvoyagejogja.com/wp-content/uploads/2017/02/IGjogjacamping.jpg"},
+  {name: "Saugeen Springs RV Park", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
+  {name: "Amazing Rocky Park Campground", image: "https://bonvoyagejogja.com/wp-content/uploads/2017/02/IGjogjacamping.jpg"}
 ]
 
 app.use(bodyParser.urlencoded({extended: true}));
