@@ -1,8 +1,34 @@
 <% include partials/header.ejs %>
 
-<h1>Landing page</h1>
+<div class="container">
+    <header class="jumbotron">
+      <div class="container">
+        <h1>Welcome to camping</h1>
+        <p>View out camps from all over the Ontario.</p>
+        <a class="btn btn-primary btn-large" href="/index/new">Add new camp</a>
+      </div>
+    </header>
 
-<a href="/campgrounds">View Campgrounds</a>
-<a href="/campgrounds/new">Add new</a>
+    <div class="row">
+      <div class="col-lg-12">
+        <h3>Our most Popular campgrounds</h3>
+      </div>
+    </div>
+
+    <div class="row text-center" style="display:flex; flex-wrap:wrap">
+      <% camps.forEach(function(camp) { %>
+        <div class="col-md-4 col-sm-6">
+          <div class="thumbnail" style="background:lightgray">
+            <img class="img-fluid" src="<%= camp.image %>">
+            <div class="caption">
+              <h4><%= camp.name%></h4>
+            </div>
+            <p><a class="btn btn-primary" href="/index/<%= camp._id %>">More info</a></p>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+
 
 <% include partials/footer.ejs %>
+</div>

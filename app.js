@@ -7,64 +7,65 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/camping");
 var campSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 })
 var Campground = mongoose.model("Camp", campSchema);
 
-// Campground.create({                                           //mongoose create
-//   name: "Saugeen Springs RV Park",
-//   image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"
-// }, function(err, camp){
+// Campground.create({
+//   name: "Forest Hill",
+//   image: "https://awesomeworld.ru/wp-content/uploads/2015/05/autumn-2183489_1280-700x400.jpg",
+//   description: "Great place. Nice view."
+// }, function(err, camp) {
 //   if(err){
-//     console.log("error");
+//     console.log(err);
 //   }else{
-//     console.log("great save!");
-//     console.log(camp);
+//     console.log("saved");
 //   }
 // })
-// var arrayData = [
-//   {name: "Saugeen Springs RV Park", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
-//   {name: "Amazing Rocky Park Campground", image: "https://bonvoyagejogja.com/wp-content/uploads/2017/02/IGjogjacamping.jpg"},
-//   {name: "Marmora KOA", image: "http://businessidei.com/uploads/posts/2013-05/1368357691_mini-kemping-1.jpg"},
-//   {name: "Saugeen Springs RV Park", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
-//   {name: "Amazing Rocky Park Campground", image: "https://bonvoyagejogja.com/wp-content/uploads/2017/02/IGjogjacamping.jpg"},
-//   {name: "Saugeen Springs RV Park", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
-//   {name: "Amazing Rocky Park Campground", image: "https://bonvoyagejogja.com/wp-content/uploads/2017/02/IGjogjacamping.jpg"}
-// ]
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 //===ROUTES
-app.get("/", (req, res) => {
-  res.render("index")
+app.get("/", (req, res) => { //INDEX page
+  res.render("landing")
 })
-app.get("/campgrounds", (req, res) => {
+app.get("/index", (req, res) => { // SHOW page
   Campground.find({}, function(err, allCamps){ //mongoose find()
     if(err){
       console.log(err);
     }else{
-      res.render("campgrounds", {camps: allCamps});
+      res.render("index", {camps: allCamps});
     }
   })
 
 })
-app.get("/campgrounds/new", (req,res) => {
+app.get("/index/new", (req,res) => { // NEW item form
   res.render('new.ejs')
 })
+app.get("/index/:id", (req, res) => { // SHOW 1 item
+  Campground.findById(req.params.id, function(err, foundCamp) {
+    if(err){
+      console.log(err);
+    } else {
+      res.render("show", {camp: foundCamp});
+    }
+  })
+})
 //===POST
-app.post("/campgrounds", (req, res) => {
+app.post("/index", (req, res) => {
   var name = req.body.name;
   var image = req.body.image;
-  var newCamp = {name: name, image: image}
+  var descr = req.body.description;
+  var newCamp = {name: name, image: image, description: descr}
   Campground.create(newCamp, function(err, camp){
     if(err){
       console.log("error");
     }else{
-      res.redirect('/campgrounds');
+      res.redirect('index');
     }
   })
-  // arrayData.push(newCamp)
 
 })
 app.listen(3000, (req, res) => {
