@@ -7,6 +7,9 @@
   </br></br></br>
   <p><%= camp.description %></p>
 </div>
-
+<% camp.comments.forEach(function(comment){ %>
+  <P>
+    <strong> <%= comment.author %></strong> - <%= comment.text%></P>
+<% }) %>
 
 <% include partials/footer.ejs %>

@@ -2,16 +2,14 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-
+const Campground = require('./models/camp.js'); //camp schema
+// const Comment = require('./models/comment.js'); //comment schema
+// const User = require('./models/user.js'); //user schema
+const seedDB = require('./seeds.js');
 //=== mongoose db
 mongoose.connect("mongodb://localhost/camping");
-var campSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-})
-var Campground = mongoose.model("Camp", campSchema);
 
+seedDB();
 // Campground.create({
 //   name: "Forest Hill",
 //   image: "https://awesomeworld.ru/wp-content/uploads/2015/05/autumn-2183489_1280-700x400.jpg",
@@ -41,11 +39,10 @@ app.get("/index", (req, res) => { // SHOW page
   })
 
 })
-app.get("/index/new", (req,res) => { // NEW item form
-  res.render('new.ejs')
-})
+
+//  show/:id
 app.get("/index/:id", (req, res) => { // SHOW 1 item
-  Campground.findById(req.params.id, function(err, foundCamp) {
+  Campground.findById(req.params.id).populate("comments").exec(function(err, foundCamp) {
     if(err){
       console.log(err);
     } else {
@@ -53,7 +50,10 @@ app.get("/index/:id", (req, res) => { // SHOW 1 item
     }
   })
 })
-//===POST
+//new + post
+app.get("/index/new", (req, res) => { // NEW item form
+  res.render('new.ejs')
+})
 app.post("/index", (req, res) => {
   var name = req.body.name;
   var image = req.body.image;
