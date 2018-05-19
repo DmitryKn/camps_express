@@ -1,4 +1,4 @@
-<% include partials/header.ejs %>
+<% include ../partials/header.ejs %>
 
 <div class="container">
     <header class="jumbotron">
@@ -18,7 +18,7 @@
     <div class="row text-center" style="display:flex; flex-wrap:wrap">
       <% camps.forEach(function(camp) { %>
         <div class="col-md-4 col-sm-6">
-          <div class="thumbnail" style="background:lightgray">
+          <div class="card" style="background:lightgray">
             <img class="img-fluid" src="<%= camp.image %>">
             <div class="caption">
               <h4><%= camp.name%></h4>
@@ -30,5 +30,5 @@
     </div>
 
 
-<% include partials/footer.ejs %>
+<% include ../partials/footer.ejs %>
 </div>
