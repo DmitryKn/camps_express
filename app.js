@@ -84,7 +84,7 @@ app.get("/index/:id", (req, res) => { // SHOW 1 item
   })
 })
 //new + comments
-app.get("/index/:id/comments/new", (req, res) => {
+app.get("/index/:id/comments/new", isLoggedIn, (req, res) => {
   Campground.findById(req.params.id, (err, campground) =>{
     if(err){
       console.log(err);
@@ -93,7 +93,7 @@ app.get("/index/:id/comments/new", (req, res) => {
     }
   })
 })
-app.post("/index/:id/comments", function(req, res) {
+app.post("/index/:id/comments", isLoggedIn, function(req, res) {
   Campground.findById(req.params.id, function(err, campground) {
     if(err){
       console.log(err);
@@ -128,6 +128,34 @@ app.post("/register", (req, res) => {
       }
   })
 })
+//===show login form
+app.get("/login", (req, res) => {
+  res.render("login")
+})
+app.post("/login", passport.authenticate("local", {
+  successRedirect: "/index",
+  failureRedirect: "/login"
+}), (req, res) => {});
+
+//logout
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect('/');
+})
+function isLoggedIn(req, res, next) {
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect("/login");
+}
+
+// MIDDLEWARE - if login -access
+function isLoggedIn(req, res, next) {
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect("/login");
+}
 
 //=================
 app.listen(3000, (req, res) => {
