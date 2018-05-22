@@ -55,7 +55,7 @@ app.get("/index", (req, res) => { // SHOW page
 
 })
 
-//new + post
+//create new + post
 app.post("/index", (req, res) => {
   var name = req.body.name;
   var image = req.body.image;
@@ -111,8 +111,25 @@ app.post("/index/:id/comments", function(req, res) {
     }
   })
 })
+//===Auth routes
+app.get("/register", (req, res) => { //show form
+  res.render("register");
+})
+app.post("/register", (req, res) => {
+  var newUser = new User({username: req.body.username});
+  User.register(newUser, req.body.password, function (err, user) {
+      if(err){
+        console.log("что то пошло не так. Может юзер уже в базе?");
+        return res.render("register");
+      } else {
+        passport.authenticate("local")(req, res, function(){
+          res.redirect("/index")
+        })
+      }
+  })
+})
 
-//
+//=================
 app.listen(3000, (req, res) => {
   console.log("Server has started. Port: 3000")
 })
