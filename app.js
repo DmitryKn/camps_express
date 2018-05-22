@@ -38,6 +38,10 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use((req, res, next) => {   //currentUser
+  res.locals.currentUser = req.user;
+  next();
+})
 
 //===ROUTES
 app.get("/", (req, res) => { //INDEX page
@@ -45,6 +49,7 @@ app.get("/", (req, res) => { //INDEX page
 })
 //index - show all
 app.get("/index", (req, res) => { // SHOW page
+
   Campground.find({}, function(err, allCamps){ //mongoose find()
     if(err){
       console.log(err);
