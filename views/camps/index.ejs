@@ -5,7 +5,7 @@
       <div class="container">
         <h1>Welcome to camping</h1>
         <p>View out camps from all over the Ontario.</p>
-        <a class="btn btn-primary btn-large" href="/index/new">Add new camp</a>
+        <a class="btn btn-primary btn-large" href="/camps/new">Add new camp</a>
       </div>
     </header>
 
@@ -23,7 +23,7 @@
             <div class="caption">
               <h4><%= camp.name%></h4>
             </div>
-            <p><a class="btn btn-primary" href="/index/<%= camp._id %>">More info</a></p>
+            <p><a class="btn btn-primary" href="/camps/<%= camp._id %>">More info</a></p>
           </div>
         </div>
       <% }); %>

@@ -3,10 +3,9 @@
 <div class="container">
       <h1>Add New Comment to <%= camp.name %></h1>
 
-    <form action="/index/<%= camp._id %>/comments" method="POST">
+    <form action="/camps/<%= camp._id %>/comments" method="POST">
       <div class="form-group">
         <input class="form-control w-50" type="text" name="comment[text]" placeholder="text"/>
-        <input class="form-control w-50" type="text" name="comment[author]" placeholder="author"/>
       </div>
       <button class="btn btn-primary btn-large btn-default">Submit!</button>
     </form>
