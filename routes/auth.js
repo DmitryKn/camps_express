@@ -6,7 +6,7 @@ const passport = require('passport');
 //===ROUTES
 router.get("/", (req, res) => { //INDEX page
   res.render("landing")
-})
+});
 
 // ===============
 // AUTH ROUTES
@@ -14,24 +14,24 @@ router.get("/", (req, res) => { //INDEX page
 
 router.get("/register", (req, res) => { //show form
   res.render("register");
-})
+});
 router.post("/register", (req, res) => {
   var newUser = new User({username: req.body.username});
-  User.register(newUser, req.body.password, function (err, user) {
+  User.register(newUser, req.body.password, (err, user) => {
       if(err){
         console.log("something wrong");
         return res.render("register");
       } else {
-        passport.authenticate("local")(req, res, function(){
+        passport.authenticate("local")(req, res, () => {
           res.redirect("/camps")
         })
       }
-  })
-})
+  });
+});
 //show login form
 router.get("/login", (req, res) => {
   res.render("login")
-})
+});
 router.post("/login", passport.authenticate("local", {
   successRedirect: "/camps",
   failureRedirect: "/login"
@@ -41,7 +41,7 @@ router.post("/login", passport.authenticate("local", {
 router.get("/logout", (req, res) => {
   req.logout();
   res.redirect('/');
-})
+});
 
 
 // MIDDLEWARE - if login -access
