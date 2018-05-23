@@ -1,0 +1,17 @@
+<% include ../partials/header.ejs%>
+
+<div class="container">
+      <h1>Edit <%= camp.name %></h1>
+
+    <form action="/camps/<%= camp._id %>?_method=PUT" method="POST">
+      <div class="form-group">
+        <input class="form-control w-50" type="text" name="camp[name]" value="<%= camp.name %>"/>
+        <input class="form-control w-50" type="text" name="camp[image]" value="<%= camp.image %>"/>
+        <input class="form-control w-50" type="text" name="camp[description]" value="<%= camp.description %>"/>
+      </div>
+      <button class="btn btn-primary btn-large btn-default">Submit!</button>
+    </form>
+
+
+  <% include ../partials/footer.ejs%>
+</div>

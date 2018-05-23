@@ -9,6 +9,7 @@ const Campground = require('./models/camp.js'); //camp schema
 const Comment = require('./models/comment.js'); //comment schema
 const User = require('./models/user.js'); //user schema
 const seedDB = require('./seeds.js');
+const methodOverride = require('method-override');
 
 const commentRoutes = require("./routes/comments.js"), //express.router
       campRoutes    = require("./routes/camps.js"),
@@ -27,6 +28,8 @@ app.use(require("express-session")({
  resave: false,
  saveUninitialized: false
 }));
+app.use(express.static(__dirname + '/public'));
+app.use(methodOverride("_method"));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -36,8 +39,7 @@ app.use((req, res, next) => {   //currentUser
   res.locals.currentUser = req.user;
   next();
 })
-
-//requireng routes
+//requiring routes
 app.use("/", authRoutes);
 app.use("/camps", campRoutes);
 app.use("/camps/:id/comments", commentRoutes);
