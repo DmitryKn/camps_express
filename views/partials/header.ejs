@@ -18,5 +18,12 @@
           <a class="p-2 text-light" href="/logout">Logout</a>
         <% } %>
       </nav>
-
+    </div>
+    <div class="container">
+      <% if(error && error.length > 0){ %>
+        <div class="alert alert-danger" role="alert"><%= error %></div>
+      <% } %>
+      <% if(success && success.length > 0){ %>
+        <div class="alert alert-success" role="alert"><%= success %></div>
+      <% } %>
     </div>

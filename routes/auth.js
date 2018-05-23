@@ -19,10 +19,11 @@ router.post("/register", (req, res) => {
   var newUser = new User({username: req.body.username});
   User.register(newUser, req.body.password, (err, user) => {
       if(err){
-        console.log("something wrong");
+        req.flash("error", err.message);
         return res.render("register");
       } else {
         passport.authenticate("local")(req, res, () => {
+          req.flash("success", "Welcome!" + user.username);
           res.redirect("/camps")
         })
       }
@@ -30,7 +31,7 @@ router.post("/register", (req, res) => {
 });
 //show login form
 router.get("/login", (req, res) => {
-  res.render("login")
+  res.render("login");
 });
 router.post("/login", passport.authenticate("local", {
   successRedirect: "/camps",
@@ -40,16 +41,9 @@ router.post("/login", passport.authenticate("local", {
 //logout
 router.get("/logout", (req, res) => {
   req.logout();
+  req.flash("success", "Logged you out.");
   res.redirect('/');
 });
 
-
-// MIDDLEWARE - if login -access
-function isLoggedIn(req, res, next) {
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect("/login");
-}
 
 module.exports = router;

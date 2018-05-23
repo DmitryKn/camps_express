@@ -34,7 +34,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
   var newCamp = {name: name, image: image, description: descr, author: autor}
   Campground.create(newCamp, (err, camp) => {
     if(err){
-      console.log("error");
+      console.log(err);
     } else {
       res.redirect("/camps");
     }
@@ -56,13 +56,18 @@ router.get("/:id", (req, res) => { // SHOW 1 item
 //EDIT form
 router.get("/:id/edit", middleware.checkCampOwnership, (req, res) => {
       Campground.findById(req.params.id, (err, foundCamp) => {
-            res.render("camps/edit", {camp: foundCamp})
+        if(err){
+          console.log(err);
+        } else {
+          res.render("camps/edit", {camp: foundCamp});
+        }
       });
 });
 //UPDATE form
 router.put("/:id", middleware.checkCampOwnership, (req, res) => {
   Campground.findByIdAndUpdate(req.params.id, req.body.camp, (err, updatedCamp) => {
     if(err){
+      console.log(err);
       res.redirect("/camps")
     } else {
       res.redirect("/camps/" + req.params.id);

@@ -10,6 +10,7 @@ const Comment = require('./models/comment.js'); //comment schema
 const User = require('./models/user.js'); //user schema
 const seedDB = require('./seeds.js');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 
 const commentRoutes = require("./routes/comments.js"), //express.router
       campRoutes    = require("./routes/camps.js"),
@@ -30,15 +31,18 @@ app.use(require("express-session")({
 }));
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-app.use((req, res, next) => {   //currentUser
+app.use((req, res, next) => {   //variables
   res.locals.currentUser = req.user;
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   next();
-})
+});
 //requiring routes
 app.use("/", authRoutes);
 app.use("/camps", campRoutes);
