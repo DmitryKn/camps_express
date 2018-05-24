@@ -8,7 +8,6 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const Campground = require('./models/camp.js'); //camp schema
 const Comment = require('./models/comment.js'); //comment schema
 const User = require('./models/user.js'); //user schema
-const seedDB = require('./seeds.js');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 

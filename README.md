@@ -1,5 +1,6 @@
 # sport_camp
+Version 1.0
+To start: node app.js
 
-to start: node app.js.
-
-work in progress..
+Tools: JavaScript, MongoDb + Mongoose, Node.js + Express, Bootstrap 4, HTML + CSS.
+Some features: Search, Authentication, Authorization, Admin, User Profile, CRUD, user comments.
