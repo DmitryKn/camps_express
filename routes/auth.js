@@ -15,8 +15,13 @@ router.get("/", (req, res) => { //INDEX page
 router.get("/register", (req, res) => { //show form
   res.render("register");
 });
+// registration logic
 router.post("/register", (req, res) => {
-  const newUser = new User({username: req.body.username});
+  const newUser = new User({
+    username: req.body.username,
+    avatar: req.body.avatar,
+    email: req.body.email
+  });
   if(req.body.adminCode === "adminko") {
       newUser.isAdmin = true;
   }
@@ -49,5 +54,16 @@ router.get("/logout", (req, res) => {
   res.redirect('/camps');
 });
 
+//USER PROFILE
+router.get("/users/:id", (req, res) => {
+  User.findById(req.params.id, (err, foundUser) => {
+      if(err){
+        req.flash("error", "User not found");
+        res.redirect("/camps");
+      } else {
+        res.render("users/show", {user: foundUser})
+      }
+  });
+});
 
 module.exports = router;

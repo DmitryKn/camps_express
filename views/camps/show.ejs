@@ -21,7 +21,7 @@
              <p><strong>Location:</strong> <%= camp.location %></p>
              <p><strong>Description:</strong> <%= camp.description %></p>
              <p>
-               <em>Submitted By: <%= camp.author.username %></em>
+               <em>Submitted By:<a href="/users/<%= camp.author.id %>"><%= camp.author.username %></a> </em>
              </p>
              <% if(currentUser && camp.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                <a class="btn btn-warning" href="/camps/<%= camp._id %>/edit">Edit info</a>
