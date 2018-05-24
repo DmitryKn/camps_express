@@ -17,6 +17,10 @@ router.get("/register", (req, res) => { //show form
 });
 router.post("/register", (req, res) => {
   const newUser = new User({username: req.body.username});
+  if(req.body.adminCode === "adminko") {
+      newUser.isAdmin = true;
+  }
+  //=== process.env.ADMIN_CODE
   User.register(newUser, req.body.password, (err, user) => {
       if(err){
           console.log(err);

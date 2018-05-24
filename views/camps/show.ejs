@@ -23,7 +23,7 @@
              <p>
                <em>Submitted By: <%= camp.author.username %></em>
              </p>
-             <% if(currentUser && camp.author.id.equals(currentUser._id)){ %>
+             <% if(currentUser && camp.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                <a class="btn btn-warning" href="/camps/<%= camp._id %>/edit">Edit info</a>
                <form id="delete-form" action="/camps/<%= camp._id %>?_method=DELETE" method="POST">
                   <button class="btn btn-danger">Delete</button>
@@ -43,7 +43,7 @@
             <strong><%= comment.author.username %></strong>
             <span class="float-right"><%= moment(comment.createdAt).fromNow() %></span>
             <p><%= comment.text %></p>
-            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+            <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
               <a class="btn btn-xs btn-warning"
                  href="/camps/<%=camp._id %>/comments/<%=comment._id %>/edit">Edit</a>
               <form id="delete-form" action="/camps/<%=camp._id %>/comments/<%=comment._id %>?_method=DELETE" method="POST">
@@ -54,7 +54,7 @@
         </div>
         <% }) %>
       </div>
-      <a href="/index">Back</a>
+      <a href="/camps">Back</a>
      </div>
   </div>
 

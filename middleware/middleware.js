@@ -4,47 +4,48 @@ const Comment = require('../models/comment.js'); //comment schema
 
 //check camp form ownership
 middlewareObject.checkCampOwnership = (req, res, next) => {
-    if(req.isAuthenticated()){
-        Campground.findById(req.params.id, (err, foundCamp) => {
-          if(err){
-            req.flash("error", "Camp not found");
-            res.redirect("/camps");
-          }else{
-            if(foundCamp.author.id.equals(req.user._id)){
-              next();
-            } else{
-              req.flash("error", "You don't have permission to do that");
-              res.redirect('/camps/' + req.params.id);
-            }
-          }
-        });
-    } else {
-      res.flash("error", "You need to be logged in to do that")
-      res.redirect("/camps");
-    }
+    Campground.findById(req.params.id, function(err, foundCamp){
+      if(err || !foundCamp){
+          console.log(err);
+          req.flash('error', 'Sorry, that camp does not exist!');
+          res.redirect('/camps');
+      } else if(foundCamp.author.id.equals(req.user._id) || req.user.isAdmin){
+          req.camp = foundCamp;
+          next();
+      } else {
+          req.flash('error', 'You don\'t have permission to do that!');
+          res.redirect('/camps/' + req.params.id);
+      }
+    });
   }
 //check comment form ownership
 middlewareObject.checkCommentOwnership = (req, res, next) => {
     if(req.isAuthenticated()){
         Comment.findById(req.params.comment_id, (err, foundComment) => {
-          if(err){
-            res.redirect("/camps");
-          }else{
-            if(foundComment.author.id.equals(req.user._id)){
-              next();
-            } else{
-              req.flash("error", "You don\'t have permission to do that!");
-              res.redirect('/camps/' + req.params.id);
-            }
-          }
-        });
+          if(err || !foundComment){
+           console.log(err);
+           req.flash('error', 'Sorry, that comment does not exist!');
+           res.redirect('/campgrounds');
+       } else if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
+            req.comment = foundComment;
+            next();
+       } else {
+           req.flash('error', 'You don\'t have permission to do that!');
+           res.redirect('/campgrounds/' + req.params.id);
+       }
+    });
+  }
+}
+  //admin chech
+middlewareObject.isAdmin = (req, res, next) => {
+    if(req.user.isAdmin) {
+      next();
     } else {
-      req.flash("error", "You need to be logged in to do that");
-      res.redirect("back");
+      req.flash('error', 'This site is now read only thanks to spam and trolls.');
+      res.redirect('back');
     }
   }
-
-//
+// authentication user
 middlewareObject.isLoggedIn = (req, res, next) => {
     if(req.isAuthenticated()){
       return next();

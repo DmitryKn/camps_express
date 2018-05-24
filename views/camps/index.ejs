@@ -1,5 +1,9 @@
 <% include ../partials/header.ejs %>
 
+<% if(currentUser && currentUser.isAdmin) { %>
+  <h4 class="text-warning">you are admin</h4>
+<% } %>
+
 <div class="container">
     <header class="jumbotron">
       <div class="container">
