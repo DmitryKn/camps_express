@@ -25,13 +25,15 @@ router.get("/new", middleware.isLoggedIn, (req, res) => { // NEW item form
 
 router.post("/", middleware.isLoggedIn, (req, res) => {
   var name = req.body.name;
+  var price = req.body.price;
   var image = req.body.image;
   var descr = req.body.description;
+  var location = req.body.location;
   var autor = {
     id: req.user._id,
     username: req.user.username
   }
-  var newCamp = {name: name, image: image, description: descr, author: autor}
+  var newCamp = {name: name, price: price, image: image, description: descr, location: location, author: autor}
   Campground.create(newCamp, (err, camp) => {
     if(err){
       console.log(err);

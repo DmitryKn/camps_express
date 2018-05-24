@@ -12,6 +12,8 @@ const seedDB = require('./seeds.js');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 
+
+
 const commentRoutes = require("./routes/comments.js"), //express.router
       campRoutes    = require("./routes/camps.js"),
       authRoutes    = require("./routes/auth.js");
@@ -29,6 +31,7 @@ app.use(require("express-session")({
  resave: false,
  saveUninitialized: false
 }));
+
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
 app.use(flash());
@@ -43,6 +46,8 @@ app.use((req, res, next) => {   //variables
   res.locals.success = req.flash("success");
   next();
 });
+//global moment 
+app.locals.moment = require('moment');
 //requiring routes
 app.use("/", authRoutes);
 app.use("/camps", campRoutes);

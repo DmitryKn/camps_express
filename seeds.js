@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var Campground = require("./models/camp");
 var Comment   = require("./models/comment");
-
+// googgle key api = AIzaSyD3oq1BZgO1i56LcSOM9JQQgJkfGg0MV-8
 var data = [
     {
         name: "Cloud's Rest",

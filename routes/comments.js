@@ -3,6 +3,7 @@ const router = express.Router({mergeParams: true});
 const Campground = require('../models/camp.js'); //camp schema
 const Comment = require('../models/comment.js'); //comment schema
 const middleware = require('../middleware/middleware.js');
+const moment = require('moment');
 
 // ===============
 // COMMENTS ROUTES
@@ -22,19 +23,20 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
   Campground.findById(req.params.id, (err, campground) => {
     if(err){
       console.log(err);
-      res.redirect("/landing");
+      res.redirect("/camps");
     }else{
       Comment.create(req.body.comment, (err, comment) => {
         if(err){
-          req.flash("error", "Something went wrong");
           console.log(err);
         } else {
+
           comment.author.id = req.user._id;
+          comment.createdAt = req.user.createdAt;
           comment.author.username = req.user.username;
           comment.save();
           campground.comments.push(comment);
           campground.save();
-          req.flash("success", "Successfully added comment");
+          req.flash("success", "Comment successfully added.");
           res.redirect("/camps/" + campground._id);
         }
       });
@@ -45,7 +47,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, (req, res) => {
   Comment.findById(req.params.comment_id, (err, foundComment) => {
     if(err){
-      res.redirect("back");
+      res.redirect("/camps");
     } else {
       res.render("comments/edit", {camp_id: req.params.id, comment: foundComment});
     }
@@ -55,7 +57,7 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, (req, res) => 
 router.put("/:comment_id/", middleware.checkCommentOwnership, (req, res) => {
   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
     if(err){
-      res.redirect("back");
+      res.render("edit");
     } else {
       res.redirect("/camps/" + req.params.id);
     }
