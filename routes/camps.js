@@ -6,16 +6,32 @@ const middleware = require('../middleware/middleware.js');
 // ===============
 // CAMPS ROUTES
 // ===============
-
-//SHOW ALL
-router.get("/", (req, res) => { // SHOW page
-  Campground.find({}, (err, allCamps) =>{ //mongoose find()
-    if(err){
-      console.log(err);
-    }else{
-      res.render("camps/index", {camps: allCamps});
-    }
-  });
+// Define escapeRegex function for search feature
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+//INDEX - SHOW ALL
+router.get("/", function(req, res){
+  if(req.query.search) {
+      const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+      // Get all campgrounds from DB
+      Campground.find({name: regex}, (err, allCamps) => {
+         if(err){
+            console.log(err);
+         } else {
+            res.render("camps/index", {camps: allCamps});
+         }
+      });
+  } else {
+      // Get all campgrounds from DB
+      Campground.find({}, (err, allCamps) => {
+         if(err){
+            console.log(err);
+         } else {
+            res.render("camps/index", {camps: allCamps});
+         }
+      });
+  }
 });
 
 //CREATE new + post
@@ -88,5 +104,7 @@ router.delete("/:id", middleware.checkCampOwnership, (req, res) => {
     }
   });
 });
+
+
 
 module.exports = router;

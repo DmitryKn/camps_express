@@ -10,6 +10,15 @@
         <h1>Welcome to camping</h1>
         <p>View out camps from all over the Ontario.</p>
         <a class="btn btn-primary btn-large" href="/camps/new">Add new camp</a>
+        <p>
+          <form action="/camps" method="GET" class="form-inline">
+            <div class="form-group">
+              <input type="text" name="search" placeholder="Search..." class="form-control mr-1">
+              <input type="Submit" value="Search" class="btn btn-secondary">
+              <a href="/camps" class="btn btn-secondary ml-3">See all</a>
+            </div>
+          </form>
+        </p>
       </div>
     </header>
 

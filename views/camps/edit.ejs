@@ -6,7 +6,7 @@
     <form action="/camps/<%= camp._id %>?_method=PUT" method="POST">
       <div class="form-group">
         <input class="form-control w-50" type="text" name="camp[name]" value="<%= camp.name %>"/>
-        <input class="form-control w-50" type="number" name="camp[price]" value="<%= camp.price %>" min="0.01" step="0.01"/>
+        <input class="form-control w-50" type="number" name="camp[price]" value="<%= camp.price %>" min="0.00" step="0.01"/>
         <input class="form-control w-50" type="text" name="camp[image]" value="<%= camp.image %>"/>
         <input class="form-control w-50" type="text" name="camp[description]" value="<%= camp.description %>"/>
         <input class="form-control w-50" type="text" name="camp[location]" value="<%= camp.location %>"/>
