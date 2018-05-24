@@ -11,7 +11,7 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 //INDEX - SHOW ALL
-router.get("/", function(req, res){
+router.get("/", (req, res) => {
   if(req.query.search) {
       const regex = new RegExp(escapeRegex(req.query.search), 'gi');
       // Get all campgrounds from DB

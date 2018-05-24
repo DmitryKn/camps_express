@@ -4,7 +4,7 @@ const Comment = require('../models/comment.js'); //comment schema
 
 //check camp form ownership
 middlewareObject.checkCampOwnership = (req, res, next) => {
-    Campground.findById(req.params.id, function(err, foundCamp){
+    Campground.findById(req.params.id, (err, foundCamp) => {
       if(err || !foundCamp){
           console.log(err);
           req.flash('error', 'Sorry, that camp does not exist!');
