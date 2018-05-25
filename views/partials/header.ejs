@@ -2,20 +2,20 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sport Camp</title>
+    <title>Camps in Ontario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark border-bottom box-shadow">
-      <a class="my-0 mr-md-auto navbar-brand" href="/">Sport Camps</a>
+      <a class="my-0 mr-md-auto navbar-brand" href="/camps">Home</a>
       <nav class="my-2 my-md-0 mr-md-3">
         <% if( !currentUser){ %>
           <a class="p-2 text-light" href="/login">Login</a>
           <a class="btn btn-outline-primary" href="/register">Sign up</a>
         <% } else { %>
-          <a class="p-2 text-light">Signed In As: <%= currentUser.username %></a>
+          <a class="p-2 text-light">Signed in as: <%= currentUser.username %></a>
           <a class="p-2 text-light" href="/logout">Logout</a>
         <% } %>
       </nav>

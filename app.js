@@ -16,7 +16,8 @@ const commentRoutes = require("./routes/comments.js"), //express.router
       authRoutes    = require("./routes/auth.js");
 
 //=== mongoose db
-mongoose.connect("mongodb://localhost/camping");
+//mongoose.connect("mongodb://localhost/camping"); //local
+mongoose.connect("mongodb://Admin:adminko@ds235860.mlab.com:35860/mongo_camps"); //mongolab
 
 // APP configuration
 app.use(bodyParser.urlencoded({extended: true}));
@@ -48,6 +49,11 @@ app.use("/camps", campRoutes);
 app.use("/camps/:id/comments", commentRoutes);
 
 //=================
-app.listen(3000, (req, res) => {
-  console.log("Server has started. Port: 3000")
+//local
+// app.listen(3000, (req, res) => {
+//   console.log("Server has started. Port: 3000")
+// })
+//cloud
+app.listen(process.env.PORT, process.env.IP, (req, res) => {
+  console.log("Server has started.")
 })
