@@ -49,10 +49,12 @@ app.use("/camps", campRoutes);
 app.use("/camps/:id/comments", commentRoutes);
 
 //=================
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
 //local
-app.listen(3000, (req, res) => {
-  console.log("Server has started. Port: 3000")
-})
+// app.listen(3000, (req, res) => {
+//   console.log("Server has started. Port: 3000")
+// })
 //cloud
 // app.listen(process.env.PORT, process.env.IP, (req, res) => {
 //   console.log("Server has started.")
